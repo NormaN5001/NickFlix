@@ -1,6 +1,64 @@
 import React from 'react';
 import axios from "axios";
 import styled from "styled-components";
+import { createGlobalStyle } from "styled-components"
+
+
+const GlobalStyle = createGlobalStyle`
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+`
+const Input = styled.input`
+  position: absolute;
+  top: 17px;
+  right: 37vw;
+  height: 30px;
+  width: 25vw;
+  border-style: none;
+  text-align: center;
+  border-radius: 5px;
+`
+const Title = styled.h1`
+  color: white;
+  text-align: center;
+  margin-top: 30px;
+`
+const Container = styled.section`
+  margin: 3vh 5vw 0 5vw;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+`
+const MovieInfo = styled.div`
+  width: 275px;
+  height: 400px;
+  background-color: #1b1919;
+  border-radius: 7px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+`
+const MovieImg = styled.img`
+  margin-top: 20px;
+  width: 200px;
+  transition: 0.7s;
+  &:hover{
+    cursor: pointer;
+    width: 230px;
+    margin-top: 10px;
+  }
+`
+const MovieName = styled.p`
+  font-size: 2vh;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+`
 
 
 const apiFilmes = axios.create({
@@ -49,15 +107,17 @@ search = (event) =>{
   render(){
     return(
       <div>
-        <h1>Filmes</h1>
-        <input type="text" placeholder="Busque o filme" onChange={this.search}/>
-        {this.state.filmesSearch.map((item) =>(
-          <div>
-            <p>{item.title}</p>
-            <img src={item.poster_path} alt={`Imagem do filme ${item.title}`}/>
-
-          </div>
+      <GlobalStyle/>
+        <Input type="text" placeholder="Busque o filme" onChange={this.search}/>
+        <Title>Filmes</Title>
+        <Container>
+        {this.state.filmesSearch.map((item, index) =>(
+          <MovieInfo>
+              <MovieName>{item.title}</MovieName>
+              <MovieImg src={item.poster_path} alt={`Imagem do filme ${item.title}`}/>
+          </MovieInfo>
         ))}
+      </Container>
       </div>
     )
   }
